@@ -2,9 +2,12 @@ package game.keno.test;
 
 import game.keno.KenoGame;
 
+import java.util.Random;
+
 public class KenoRTP {
         public static void main(String[] args) {
             KenoGame kenoGame = new KenoGame();
+            Random random = new Random();
             int totalStake = 0;
             int totalWin = 0;
             int rounds = 1000_000; // Number of rounds to simulate
@@ -12,7 +15,7 @@ public class KenoRTP {
 
             for (int i = 0; i < rounds; i++) {
                 int stake = 1; // Assuming a fixed stake of 1 unit per round
-                int winAmount  = kenoGame.playGame(stake);
+                int winAmount  = kenoGame.playGame(stake, random);
                 if(winAmount >0) {
                     countWin++;
                 }

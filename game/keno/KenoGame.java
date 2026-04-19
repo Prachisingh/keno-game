@@ -1,27 +1,26 @@
 package game.keno;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Random;
+import java.util.Set;
 
 public class KenoGame {
 
-    private ArrayList<Integer> serverDrawnNumbers;
-    private ArrayList<Integer> playerNumbers ;
+    private Set<Integer> serverDrawnNumbers;
+    private Set<Integer> playerNumbers ;
 
-    private ArrayList<Integer> matchedNumbers ;
-
-
+    private Set<Integer> matchedNumbers ;
 
 
 
-    public ArrayList<Integer> getMatchedNumbers() {
-        return matchedNumbers;
-    }
 
 
-        public void getServerDrawnNumbers() {
-            Random random = new Random();
-            serverDrawnNumbers = new ArrayList<>(); // Clear previous drawn numbers before generating new ones
+
+
+        public void getServerDrawnNumbers(Random random) {
+            ;
+            serverDrawnNumbers =new HashSet<>(); // Clear previous drawn numbers before generating new ones
 
             while (serverDrawnNumbers.size() < 20) {
                 int drawnNumber = random.nextInt(80) + 1;               
@@ -32,7 +31,7 @@ public class KenoGame {
         }
 
         public void checkMatches() {
-        matchedNumbers = new ArrayList<>();
+        matchedNumbers = new HashSet<>();
             for (Integer number : playerNumbers) {
                 if (serverDrawnNumbers.contains(number)) {
                     matchedNumbers.add(number);
@@ -40,11 +39,11 @@ public class KenoGame {
             }
         }
         
-        ArrayList<Integer> getPlayerNumbers() {
+        Set<Integer> getPlayerNumbers(Random random) {
             // This method should return the player's chosen numbers.
             // let's assume the player chooses 10 random numbers.
-            Random random = new Random();
-            playerNumbers = new ArrayList<>(); // Clear previous player numbers before generating new ones
+
+            playerNumbers = new HashSet<>(); // Clear previous player numbers before generating new ones
             while (playerNumbers.size() < 10) {
                 int chosenNumber = random.nextInt(80) + 1;
                 if (!playerNumbers.contains(chosenNumber)) {
@@ -54,9 +53,9 @@ public class KenoGame {
             return playerNumbers;
         }
 
-        public int playGame(int stake) {
-            getServerDrawnNumbers();
-            getPlayerNumbers();
+        public int playGame(int stake, Random random) {
+            getServerDrawnNumbers(random);
+            getPlayerNumbers(random);
             checkMatches();
             int winningAmount = 0;
 
@@ -106,7 +105,7 @@ public class KenoGame {
 
     public static void main(String[] args) {
         KenoGame game = new KenoGame();
-        game.playGame(2);
+        game.playGame(2, new Random());
     }
 
 
