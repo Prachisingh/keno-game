@@ -8,69 +8,63 @@ import java.util.Set;
 public class KenoGame {
 
     private Set<Integer> serverDrawnNumbers;
-    private Set<Integer> playerNumbers ;
+    private Set<Integer> playerNumbers;
 
-    private Set<Integer> matchedNumbers ;
-
-
+    private Set<Integer> matchedNumbers;
 
 
+    public void getServerDrawnNumbers(Random random) {
+        serverDrawnNumbers = new HashSet<>(); // Clear previous drawn numbers before generating new ones
 
-
-
-        public void getServerDrawnNumbers(Random random) {
-            ;
-            serverDrawnNumbers =new HashSet<>(); // Clear previous drawn numbers before generating new ones
-
-            while (serverDrawnNumbers.size() < 20) {
-                int drawnNumber = random.nextInt(80) + 1;               
-                if (!serverDrawnNumbers.contains(drawnNumber)) {
-                    serverDrawnNumbers.add(drawnNumber);
-                }
+        while (serverDrawnNumbers.size() < 20) {
+            int drawnNumber = random.nextInt(80) + 1;
+            if (!serverDrawnNumbers.contains(drawnNumber)) {
+                serverDrawnNumbers.add(drawnNumber);
             }
         }
+    }
 
-        public void checkMatches() {
+    public void checkMatches() {
         matchedNumbers = new HashSet<>();
-            for (Integer number : playerNumbers) {
-                if (serverDrawnNumbers.contains(number)) {
-                    matchedNumbers.add(number);
-                }
+        for (Integer number : playerNumbers) {
+            if (serverDrawnNumbers.contains(number)) {
+                matchedNumbers.add(number);
             }
         }
-        
-        Set<Integer> getPlayerNumbers(Random random) {
-            // This method should return the player's chosen numbers.
-            // let's assume the player chooses 10 random numbers.
+    }
 
-            playerNumbers = new HashSet<>(); // Clear previous player numbers before generating new ones
-            while (playerNumbers.size() < 10) {
-                int chosenNumber = random.nextInt(80) + 1;
-                if (!playerNumbers.contains(chosenNumber)) {
-                    playerNumbers.add(chosenNumber);
-                }
+    Set<Integer> getPlayerNumbers(Random random) {
+        // This method should return the player's chosen numbers.
+        // let's assume the player chooses 10 random numbers.
+
+        playerNumbers = new HashSet<>(); // Clear previous player numbers before generating new ones
+        while (playerNumbers.size() < 10) {
+            int chosenNumber = random.nextInt(80) + 1;
+            if (!playerNumbers.contains(chosenNumber)) {
+                playerNumbers.add(chosenNumber);
             }
-            return playerNumbers;
         }
+        return playerNumbers;
+    }
 
-        public int playGame(int stake, Random random) {
-            getServerDrawnNumbers(random);
-            getPlayerNumbers(random);
-            checkMatches();
-            int winningAmount = 0;
+    public int playGame(int stake, Random random) {
+        getServerDrawnNumbers(random);
+        getPlayerNumbers(random);
+        checkMatches();
+        int winningAmount = 0;
 
 
-            if(matchedNumbers.size() >=4 ){
+        if (matchedNumbers.size() >= 4) {
 
-                 winningAmount = calculateWinningAmount(stake);
+            winningAmount = calculateWinningAmount(stake);
 //                System.out.println("Congratulations! You have matched " + matchedNumbers.size() + " numbers: " + matchedNumbers + ". You win! " + winningAmount);
 
-             } else {
-                //System.out.println("Sorry, you only matched " + matchedNumbers.size() + " numbers: " + matchedNumbers);
-            }
-            return winningAmount;
-
+        } else {
+            //System.out.println("Sorry, you only matched " + matchedNumbers.size() + " numbers: " + matchedNumbers);
         }
+        return winningAmount;
+
+    }
 
     private int calculateWinningAmount(int stake) {
         int matchedCount = matchedNumbers.size();
@@ -107,7 +101,6 @@ public class KenoGame {
         KenoGame game = new KenoGame();
         game.playGame(2, new Random());
     }
-
 
 
 }
