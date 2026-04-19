@@ -24,7 +24,7 @@ public class KenoRTP {
             System.out.println("Hit rate: " + ((double) countWin / rounds * 100) + "%");
             System.out.println("Total Stake: " + totalStake);
             System.out.println("Total Win: " + totalWin);
-            System.out.println("RTP: " + rtp + "%");
+            System.out.println("RTP: " + rtp + "% ");
         }
 
 
