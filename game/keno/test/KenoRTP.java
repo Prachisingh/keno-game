@@ -9,7 +9,7 @@ import java.util.concurrent.Executors;
 public class KenoRTP {
     static int numberOfAvailableThreads = Runtime.getRuntime().availableProcessors();
 //static int numberOfAvailableThreads = 1;
-    static int rounds = 1000_0000_0; // Number of rounds to simulate
+    static int rounds = 1000_00000; // Number of rounds to simulate
     static int finishedThreadCount = 0;
     static int stake = 1; // Assuming a fixed stake of 1 unit per round
 

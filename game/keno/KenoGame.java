@@ -1,6 +1,5 @@
 package game.keno;
 
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Random;
 import java.util.Set;
@@ -18,9 +17,8 @@ public class KenoGame {
 
         while (serverDrawnNumbers.size() < 20) {
             int drawnNumber = random.nextInt(80) + 1;
-            if (!serverDrawnNumbers.contains(drawnNumber)) {
                 serverDrawnNumbers.add(drawnNumber);
-            }
+
         }
     }
 
@@ -40,9 +38,8 @@ public class KenoGame {
         playerNumbers = new HashSet<>(); // Clear previous player numbers before generating new ones
         while (playerNumbers.size() < 10) {
             int chosenNumber = random.nextInt(80) + 1;
-            if (!playerNumbers.contains(chosenNumber)) {
                 playerNumbers.add(chosenNumber);
-            }
+
         }
         return playerNumbers;
     }
