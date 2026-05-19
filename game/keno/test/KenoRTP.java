@@ -1,6 +1,8 @@
 package game.keno.test;
 
 import game.keno.KenoGame;
+import game.keno.RtpResult;
+import game.keno.SpinResponse;
 
 import java.util.Random;
 import java.util.concurrent.ExecutorService;
@@ -9,13 +11,16 @@ import java.util.concurrent.Executors;
 public class KenoRTP {
     static int numberOfAvailableThreads = Runtime.getRuntime().availableProcessors();
 //static int numberOfAvailableThreads = 1;
-    static int rounds = 1000_00000; // Number of rounds to simulate
+    static int rounds = 1000_0000; // Number of rounds to simulate
     static int finishedThreadCount = 0;
     static int stake = 1; // Assuming a fixed stake of 1 unit per round
 
-    static int totalWin = 0;
+    static double totalWin = 0;
+    static int totalSpot2Count = 0;
     static int eachThreadRounds = rounds / numberOfAvailableThreads;
     static long startingTime;
+    static RtpResult rtpResult = new RtpResult();
+
     public static void main(String[] args) {
         ExecutorService  executorService = Executors.newFixedThreadPool(numberOfAvailableThreads);
         startingTime = System.currentTimeMillis();
@@ -27,17 +32,17 @@ public class KenoRTP {
     }
 
     private static void simulateKenoRounds() {
-        
+
         addToRtpResult(playGame());
-        
+
     }
 
-    private static int playGame() {
+    private static double playGame() {
 
         KenoGame kenoGame = new KenoGame();
         Random random = new Random();
         int totalStake = 0;
-        int totalWin = 0;
+        double totalWin = 0;
 //        int rounds = 1000_000; // Number of rounds to simulate
 
         int countWin = 0;
@@ -45,7 +50,7 @@ public class KenoRTP {
 
         for (int i = 0; i < eachThreadRounds; i++) {
 
-            int winAmount = kenoGame.playGame(stake, random);
+            double winAmount = kenoGame.playGame(stake, random);
             if (winAmount > 0) {
                 countWin++;
             }
@@ -61,13 +66,13 @@ public class KenoRTP {
         return totalWin;
     }
 
-    private static synchronized void addToRtpResult(int result) {
+    private static synchronized void addToRtpResult(double result) {
         finishedThreadCount++;
         totalWin += result;
 
         if (finishedThreadCount == numberOfAvailableThreads) {
             int totalStake = stake * rounds;
-            System.out.println("All threads finished. Total RTP result: " + ((double)totalWin/totalStake * 100) + "%");
+            System.out.println("All threads finished. Total RTP result: " + (totalWin/totalStake * 100) + "%");
 
             long endTime = System.currentTimeMillis();
             System.out.println("Time taken: " + (endTime - startingTime) / 1000.0 + " seconds");
