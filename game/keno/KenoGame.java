@@ -18,6 +18,7 @@ public class KenoGame {
         while (serverDrawnNumbers.size() < 20) {
             int drawnNumber = random.nextInt(80) + 1;
             serverDrawnNumbers.add(drawnNumber);
+            lastServerNum = drawnNumber; // Update lastServerNum with the most recently drawn number
 
         }
 
@@ -57,6 +58,9 @@ public class KenoGame {
         // player may select between 2 and 10 numbers from a pool of 80 numbers
 
         int numberOfSpots = random.nextInt(2, 11) ;
+        if(numberOfSpots == 1 || numberOfSpots > 10){
+            throw new IllegalStateException("Number of spots must be between 2 and 10. Generated: " + numberOfSpots);
+        }
 //        numberOfSpots = 2; // For testing purposes, you can set this to a fixed value between 2 and 10
 
         playerNumbers = new HashSet<>(); // Clear previous player numbers before generating new ones
@@ -75,10 +79,10 @@ public class KenoGame {
         return playerNumbers;
     }
 
-    public double playGame(int stake, Random random) {
+    public SpinResponse playGame(int stake, Random random) {
         getServerDrawnNumbers(random);
         getPlayerNumbers(random);
-        lastServerNum = getLastServerNum();
+
 
         checkMatches();
         double winningAmount = 0;
@@ -98,7 +102,11 @@ public class KenoGame {
         } else {
             System.out.println("Sorry, you only matched " + matchedNumbers.size() + " numbers: " + matchedNumbers);
         }
-        return winningAmount * multiplier;
+        SpinResponse spinResponse = new SpinResponse();
+        spinResponse.setWinAmount(winningAmount * multiplier);
+        spinResponse.setNumberOfSpots(playerNumbers.size());
+
+        return spinResponse;
 
     }
 
