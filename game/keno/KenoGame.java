@@ -27,7 +27,13 @@ public class KenoGame {
         if(serverDrawnNumbers == null || serverDrawnNumbers.isEmpty()){
             throw new IllegalStateException("Server drawn numbers have not been generated yet.");
         }
-        lastServerNum = serverDrawnNumbers.stream().reduce((first, second) -> second).orElseThrow();
+
+        // Get the last drawn number from the serverDrawnNumbers set
+        for(int i : serverDrawnNumbers){
+            lastServerNum = i;
+        }
+
+        //lastServerNum = serverDrawnNumbers.stream().reduce((first, second) -> second).orElseThrow();
         return lastServerNum;
     }
 

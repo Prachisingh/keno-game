@@ -22,13 +22,15 @@ public class KenoRTP {
     static RtpResult rtpResult = new RtpResult();
 
     public static void main(String[] args) {
-        ExecutorService  executorService = Executors.newFixedThreadPool(numberOfAvailableThreads);
-        startingTime = System.currentTimeMillis();
+        playGame();
 
-        for(int i = 0; i < numberOfAvailableThreads; i++){
-            executorService.submit(()-> simulateKenoRounds());
-
-        }
+//        ExecutorService  executorService = Executors.newFixedThreadPool(numberOfAvailableThreads);
+//        startingTime = System.currentTimeMillis();
+//
+//        for(int i = 0; i < numberOfAvailableThreads; i++){
+//            executorService.submit(()-> simulateKenoRounds());
+//
+//        }
     }
 
     private static void simulateKenoRounds() {
@@ -41,14 +43,14 @@ public class KenoRTP {
 
         KenoGame kenoGame = new KenoGame();
         Random random = new Random();
-        int totalStake = 0;
+
         double totalWin = 0;
-//        int rounds = 1000_000; // Number of rounds to simulate
+        int rounds = 1000_000; // Number of rounds to simulate
 
         int countWin = 0;
 
 
-        for (int i = 0; i < eachThreadRounds; i++) {
+        for (int i = 0; i < rounds; i++) {
 
             double winAmount = kenoGame.playGame(stake, random);
             if (winAmount > 0) {
@@ -57,12 +59,12 @@ public class KenoRTP {
 
             totalWin += winAmount;
         }
-
-//        double rtp = (double) totalWin / totalStake * 100;
-//        System.out.println("Hit rate: " + ((double) countWin / rounds * 100) + "%");
-//        System.out.println("Total Stake: " + totalStake);
-//        System.out.println("Total Win: " + totalWin);
-//        System.out.println("RTP: " + rtp + "% ");
+        int totalStake = stake * rounds;
+        double rtp = (double) totalWin /totalStake * 100;
+        System.out.println("Hit rate: " + ((double) countWin / rounds * 100) + "%");
+        System.out.println("Total Stake: " + totalStake);
+        System.out.println("Total Win: " + totalWin);
+        System.out.println("RTP: " + rtp + "% ");
         return totalWin;
     }
 
