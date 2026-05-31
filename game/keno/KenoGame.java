@@ -8,8 +8,8 @@ public class KenoGame {
     private Set<Integer> playerNumbers;
 
     private Set<Integer> matchedNumbers;
-    private static int lastServerNum;
-    private static int multiplier = 1;
+    private  int lastServerNum;
+    private  int multiplier = 1;
 
 
     public void getServerDrawnNumbers(Random random) {
@@ -100,36 +100,7 @@ public class KenoGame {
 
     }
 
-    private int calculateWinningAmount(int stake) {
-        int matchedCount = matchedNumbers.size();
-        int winningAmount = 0;
 
-        switch (matchedCount) {
-            case 4:
-                winningAmount = stake * 1; // Example payout for 4 matches
-                break;
-            case 5:
-                winningAmount = stake * 2; // Example payout for 5 matches
-                break;
-            case 6:
-                winningAmount = stake * 12; // Example payout for 6 matches
-                break;
-            case 7:
-                winningAmount = stake * 60; // Example payout for 7 matches
-                break;
-            case 8:
-                winningAmount = stake * 375; // Example payout for 8 matches
-                break;
-            case 9:
-                winningAmount = stake * 2500; // Example payout for 9 matches
-                break;
-            case 10:
-                winningAmount = stake * 10000; // Example payout for 10 matches
-                break;
-        }
-
-        return winningAmount;
-    }
 
     private Map<Integer, KenoPayout> getPayoutTable() {
 
