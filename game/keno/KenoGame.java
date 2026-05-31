@@ -21,23 +21,13 @@ public class KenoGame {
             lastServerNum = drawnNumber; // Update lastServerNum with the most recently drawn number
 
         }
-
-    }
-
-    public int getLastServerNum(){
-        if(serverDrawnNumbers == null || serverDrawnNumbers.isEmpty()){
-            throw new IllegalStateException("Server drawn numbers have not been generated yet.");
+        // check if server numbers is 20 numbers
+        if(serverDrawnNumbers.size() != 20){
+            System.out.println("Duplicate numbers generated for server draw, regenerating...");
+            throw new RuntimeException("Duplicate numbers generated for server draw, regenerating...");
         }
 
-        // Get the last drawn number from the serverDrawnNumbers set
-        for(int i : serverDrawnNumbers){
-            lastServerNum = i;
-        }
-
-        //lastServerNum = serverDrawnNumbers.stream().reduce((first, second) -> second).orElseThrow();
-        return lastServerNum;
     }
-
     public void checkMatches() {
         matchedNumbers = new HashSet<>();
         for (Integer number : playerNumbers) {
@@ -80,6 +70,7 @@ public class KenoGame {
     }
 
     public SpinResponse playGame(int stake, Random random) {
+        multiplier = 1; // Reset multiplier for each game;
         getServerDrawnNumbers(random);
         getPlayerNumbers(random);
 
@@ -96,8 +87,7 @@ public class KenoGame {
             KenoPayout selectedPayTable =  getPayoutTable().get(playerNumbers.size());
             winningAmount = selectedPayTable.calculateWinningAmount(stake, matchedNumbers.size());
 
-//            winningAmount = calculateWinningAmount(stake);
-//                System.out.println("Congratulations! You have matched " + matchedNumbers.size() + " numbers: " + matchedNumbers + ". You win! " + winningAmount);
+
 
         } else {
             System.out.println("Sorry, you only matched " + matchedNumbers.size() + " numbers: " + matchedNumbers);
